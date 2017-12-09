@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticle</title>
+    <style>
+        pre {
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+<pre id="result"></pre>
+<script src="../build/ticle.js"></script>
+<script>
+    var resultEl = document.getElementById('result');
+    var timer = new Ticle.SimpleTimer({
+        diff: true
+    });
+
+    function writeLn(text) {
+        resultEl.innerHTML += text.concat('\n');
+    }
+
+    timer.setTrustyInterval(function (diff) {
+        writeLn('setTrustyInterval: 1000ms , diff: ' + diff);
+    }, 1000)
+</script>
+</body>
+</html>
