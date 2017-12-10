@@ -8,15 +8,15 @@
  
  * Подсчет разницы во времени между стартом отсчета и срабатывание коллбэка.
  
- # Установка 
+# Установка 
  ```
  $ npm install ticle
  ```
  или
  ```
- <script src="https://unpkg.com/ticle@1.0.0/build/ticle.js">
+ <script src="https://unpkg.com/ticle@latest/build/ticle.js">
  ```
- # Как пользоваться
+# Как пользоваться
 
 Таймер в отдельном потоке
 ```
