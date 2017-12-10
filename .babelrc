@@ -2,18 +2,12 @@
   "presets": [
     [
       "@babel/preset-env", {
-        "targets": {
-          "browsers": [
-            "last 2 versions",
-            "safari >= 7"]
-        },
-        "modules": false,
-        "loose": true
-      }
+      "modules": false,
+      "loose": true
+    }
     ]
   ],
   "plugins": [
-    "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-class-properties"
   ]

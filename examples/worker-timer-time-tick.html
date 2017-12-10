@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticle</title>
+    <style>
+        pre {
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+worker, setTrustyInterval
+<pre id="result1"></pre>
+simple, setInterval
+<pre id="result2"></pre>
+<script src="../build/ticle.js"></script>
+<script>
+    var result1El = document.getElementById('result1');
+    var result2El = document.getElementById('result2');
+    var wTimer = new Ticle.WorkerTimer({
+        recordDiff: true
+    });
+    var sTimer = new Ticle.SimpleTimer({
+        recordDiff: true
+    });
+    var timestamp = Date.now();
+    var timestamp2 = timestamp;
+
+    function write1(text) {
+        result1El.innerHTML = text;
+    }
+
+    function write2(text) {
+        result2El.innerHTML = text;
+    }
+
+    function toTime(timestamp) {
+        var date = new Date(timestamp);
+        var hh = date.getHours();
+        var mm = date.getMinutes();
+        var ss = date.getSeconds();
+        var ms = date.getMilliseconds();
+        return [hh, mm, ss, ms].join(':');
+    }
+
+    wTimer.setTrustyInterval(function (diff) {
+        timestamp += diff;
+        write1(
+          toTime(timestamp)
+        );
+    }, 1000);
+
+    sTimer.setInterval(function (diff) {
+        timestamp2 += diff;
+        write2(
+          toTime(timestamp2)
+        );
+    }, 1000);
+</script>
+</body>
+</html>

@@ -1,31 +1,24 @@
 import { Proxy } from './Proxy';
-import { isObject } from './utils';
-
 
 export class SimpleTimer {
     constructor(options) {
-        if (!isObject(options)) {
-            options = {};
-        }
-
-        this.Proxy = new Proxy({
-            recordDiff: options.diff
-        });
+        this.options = options;
+        this.Proxy = new Proxy();
     }
 
     setTimeout(callback, delay, ...args) {
         return this.Proxy.proxyTimer(
-          setTimeout, callback, delay, ...args);
+            setTimeout, callback, delay, ...args)(this.options);
     }
 
     setInterval(callback, delay, ...args) {
         return this.Proxy.proxyTimer(
-          setInterval, callback, delay, ...args);
+            setInterval, callback, delay, ...args)(this.options);
     }
 
     setTrustyInterval(callback, delay, ...args) {
         return this.Proxy.proxyTimerWithLooping(
-          setTimeout, callback, delay, ...args);
+            setTimeout, callback, delay, ...args)(this.options);
     }
 
     clearTimeout(id) {

@@ -2,18 +2,22 @@ import { WorkerTimer } from './WorkerTimer';
 import { SimpleTimer } from './SimpleTimer';
 import { isObject } from './utils';
 
-let Timer;
+let TimerCtor;
 
 export class WorkerThreadTimer {
+    Timer;
     constructor(options) {
         if (!isObject(options)) {
             options = {};
         }
-        if (Timer === undefined) {
-            Timer = WorkerThreadTimer.isPlatformSupportWorker() ?
-                        new WorkerTimer(options) :
-                            new SimpleTimer(options);
+
+        if (TimerCtor === undefined) {
+            TimerCtor = WorkerThreadTimer.isPlatformSupportWorker() ?
+                WorkerTimer :
+                    SimpleTimer;
         }
+
+        this.Timer = new TimerCtor(options);
     }
 
     static isPlatformSupportWorker() {
@@ -21,26 +25,26 @@ export class WorkerThreadTimer {
     }
 
     setTimeout(callback, delay, ...args) {
-        return Timer.setTimeout(callback, delay, ...args);
+        return this.Timer.setTimeout(callback, delay, ...args);
     }
 
     setInterval(callback, delay, ...args) {
-        return Timer.setInterval(callback, delay, ...args);
+        return this.Timer.setInterval(callback, delay, ...args);
     }
 
     setTrustyInterval(callback, delay, ...args) {
-        return Timer.setTrustyInterval(callback, delay, ...args);
+        return this.Timer.setTrustyInterval(callback, delay, ...args);
     }
 
     clearTimeout(id) {
-        return Timer.clearTimeout(id);
+        return this.Timer.clearTimeout(id);
     }
 
     clearInterval(id) {
-        return Timer.clearInterval(id);
+        return this.Timer.clearInterval(id);
     }
 
     clearTrustyInterval(id) {
-        return Timer.clearTrustyInterval(id);
+        return this.Timer.clearTrustyInterval(id);
     }
 }

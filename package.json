@@ -1,27 +1,45 @@
 {
-  "name": "ticle",
-  "version": "1.0.0",
-  "description": "Timer on web worker",
-  "main": "build/ticle.js",
-  "scripts": {
-    "build": "webpack"
-  },
-  "author": "Hokid",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.0.0-beta.34",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.34",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.34",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.34",
-    "@babel/preset-env": "^7.0.0-beta.34",
-    "babel-loader": "^8.0.0-beta.0",
-    "webpack": "^3.10.0",
-    "worker-loader": "^1.1.0"
-  },
-  "browserslist": [
-    "> 0.1%"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.34"
-  }
+    "name": "ticle",
+    "version": "1.0.0",
+    "description": "Extended js timers",
+    "main": "build/ticle.js",
+    "scripts": {
+        "build": "webpack -p"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Hokid/ticle.git"
+    },
+    "files": [
+        "build",
+        "src"
+    ],
+    "keywords": [
+        "timers",
+        "worker",
+        "time"
+    ],
+    "homepage": "https://github.com/Hokid/ticle",
+    "bugs": {
+        "url": "https://github.com/Hokid/ticle/issues"
+    },
+    "author": "Kirill Horoshilov <mr.hokid@gmail.com> (https://github.com/Hokid)",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.0.0-beta.34",
+        "@babel/plugin-proposal-class-properties": "^7.0.0-beta.34",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.34",
+        "@babel/plugin-transform-runtime": "^7.0.0-beta.34",
+        "@babel/preset-env": "^7.0.0-beta.34",
+        "babel-loader": "^8.0.0-beta.0",
+        "webpack": "^3.10.0",
+        "worker-loader": "^1.1.0"
+    },
+    "browserslist": [
+        "> 0.1%",
+        "not ie <= 8"
+    ],
+    "dependencies": {
+        "@babel/runtime": "^7.0.0-beta.34"
+    }
 }

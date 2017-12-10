@@ -1,47 +1,46 @@
 // @flow
-import { SimpleTimer } from './SimpleTimer';
+import { Proxy } from './Proxy';
 import { createResponse, isObject } from './utils';
 import * as action from './actions';
 
-let Timer;
+let TimerProxy;
 let inited = false;
 const timers = {};
 
 function callbackCreator(action, id) {
     return function (...args) {
         self.postMessage(
-          createResponse(action, id, { args }));
+            createResponse(action, id, { args }));
     };
 }
 
-function setTimeoutTick(id, delay, ...args) {
-    timers[id] = Timer.setTimeout(
-      callbackCreator(action.ACTION_TICK, id), delay, ...args);
+function setTimeoutTick(id, delay, options, args) {
+    timers[id] = TimerProxy.proxyTimer(setTimeout,
+        callbackCreator(action.ACTION_TICK, id), delay, ...args)(options);
 }
 
-function setIntervalTick(id, delay, ...args) {
-    timers[id] = Timer.setInterval(
-      callbackCreator(action.ACTION_TICK, id), delay, ...args);
+function setIntervalTick(id, delay, options, args) {
+    timers[id] = TimerProxy.proxyTimer(setInterval,
+        callbackCreator(action.ACTION_TICK, id), delay, ...args)(options);
 }
 
-function setTrustyIntervalTick(id, delay, ...args) {
-
-    timers[id] = Timer.setTrustyInterval(
-      callbackCreator(action.ACTION_TICK, id), delay, ...args);
+function setTrustyIntervalTick(id, delay, options, args) {
+    timers[id] = TimerProxy.proxyTimerWithLooping(setTimeout,
+        callbackCreator(action.ACTION_TICK, id), delay, ...args)(options);
 }
 
 function clearTimeoutTick(id) {
-    Timer.clearTimeout(timers[id]);
+    TimerProxy.proxyClear(clearTimeout , timers[id]);
     delete timers[id];
 }
 
 function clearIntervalTick(id) {
-    Timer.clearInterval(timers[id]);
+    TimerProxy.proxyClear(clearInterval , timers[id]);
     delete timers[id];
 }
 
 function clearTrustyIntervalTick(id) {
-    Timer.clearTrustyInterval(timers[id]);
+    TimerProxy.proxyClear(clearTimeout , timers[id]);
     delete timers[id];
 }
 
@@ -54,10 +53,10 @@ self.onmessage = (event) => {
     const { id, delay, args, options } = message.data;
     switch (message.action) {
         case action.ACTION_SETTIMEOUT:
-            setTimeoutTick(id, delay, ...args);
+            setTimeoutTick(id, delay, options, args);
             break;
         case action.ACTION_SETINTERVAL:
-            setIntervalTick(id, delay, ...args);
+            setIntervalTick(id, delay, options, args);
             break;
         case action.ACTION_CLEARTIMEOUT:
             clearTimeoutTick(id);
@@ -69,11 +68,12 @@ self.onmessage = (event) => {
             clearTrustyIntervalTick(id);
             break;
         case action.ACTION_SETTRUSTYINTERVAL:
-            setTrustyIntervalTick(id, delay, ...args);
+            setTrustyIntervalTick(id, delay, options, args);
             break;
         case action.ACTION_INIT:
             if (!inited) {
-                Timer = new SimpleTimer(options);
+                inited = true;
+                TimerProxy = new Proxy();
             }
             break;
         default:
