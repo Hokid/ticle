@@ -14,7 +14,7 @@
  ```
  или
  ```
- <script src="path/ticle.js">
+ <script src="https://unpkg.com/ticle@1.0.0/build/ticle.js">
  ```
  # Как пользоваться
 
