@@ -1,7 +1,7 @@
 {
     "name": "ticle",
-    "version": "1.0.2",
-    "description": "Timers utility based on web worker thred",
+    "version": "1.0.3",
+    "description": "Timers utility based on web worker thread",
     "main": "build/ticle.js",
     "scripts": {
         "build": "webpack",

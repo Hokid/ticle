@@ -1,68 +1,68 @@
 # Ticle
 
-Небольшая библиотека, расширяющая возможности стандартных `setTimeout` и `setInterval`. 
+A small library that extends the capabilities of the standard ` setTimeout ` and ` setInterval `.
 
-# Возможности
+# Capabilities
 
- * Установка таймеров в отдельном потоке. Некоторые баузеры понижают приоритет таймеров, при переходе в другую вкладку или сворачивание окна, это приводит к задержке срабатывания. Для таймеров, работающих в отдельном потоке такая проблема отсутствует.
+ * Setting timers in web worker thread. Some browsers lower the priority of timers, when switching to another tab or minimizing the window, this produce execution delay more than expected. For timers working in a separate thread, there is no such problem.
  
- * Подсчет разницы во времени между стартом отсчета и срабатывание коллбэка.
+ * Counting the time difference between set timer and trigger callback
  
-# Установка 
+# Install
  ```
- $ npm install ticle
+   $ npm install ticle
  ```
- или
+ or
  ```
- <script src="https://unpkg.com/ticle@latest/build/ticle.js">
+   <script src="https://unpkg.com/ticle@latest/build/ticle.js">
  ```
-# Как пользоваться
+# How to use
 
-Таймер в отдельном потоке
+Timers in worker thread
 ```
-import Ticle from 'ticle';
-
-const WorkerTimer = new Ticle.WorkerTimer({ recordDiff: true });
-
-WorkerTimer.setTrustyInterval(
-    (diff, arg1) => console.log(diff, arg1),
-    1000, 'привет');
-
-// 1001, привет
-// ...
+  import Ticle from 'ticle';
+  
+  const WorkerTimer = new Ticle.WorkerTimer({ recordDiff: true });
+  
+  WorkerTimer.setTrustyInterval(
+      (diff, arg1) => console.log(diff, arg1),
+      1000, 'arg1');
+  
+  // 1001, arg1
+  // ...
 ```
-Обычный
+Standard
 ```
-import Ticle from 'ticle';
-
-const WorkerTimer = new Ticle.SimpleTimer({ recordDiff: true });
-
-WorkerTimer.setInterval(
-    (diff, arg1) => console.log(diff, arg1),
-    1000, 'привет');
+  import Ticle from 'ticle';
+  
+  const WorkerTimer = new Ticle.SimpleTimer({ recordDiff: true });
+  
+  WorkerTimer.setInterval(
+      (diff, arg1) => console.log(diff, arg1),
+      1000, arg1');
 ```
 
-Некоторые примеры можно посмотреть в `examples/`.
+Some examples stored in ` examples/ `.
 
-# Таймеры
+# Timers constructors
 
-* `WorkerTimer(options)` - установка таймеров в отдельном потоке
-* `SimpleTimer(options)` - обычная установка таймеров
+* ` WorkerTimer(options) `
+* ` SimpleTimer(options) `
 
-# Методы
+# Methods
 
-* **setTimeout(func: Function, delay: number [, ...args])** - тоже самое, что `setTimeout`, `...args` - любое кол-во аргументов, передаваемых в коллбэк `func`.
+* **setTimeout(func: Function, delay: number [, ...args])** - similar to ` setTimeout `, ` ...args ` - any number of arguments provided to ` func `.
 
-* **setInterval(func: Function, delay: number [, ...args])** - тоже самое, что `setInterval`.
+* **setInterval(func: Function, delay: number [, ...args])** - similar to `setInterval`.
 
-* **setTrustyInterval(func: Function, delay: number [, ...args])** - тоже самое, что `setInterval`, только реализован на `setTimeout`.
+* **setTrustyInterval(func: Function, delay: number [, ...args])** - similar to ` setInterval `, realisation base on ` setTimeout `.
 
-* **clearTimeout(id: number)** - тоже самое, что `clearTimeout`.
+* **clearTimeout(id: number)** - similar to ` learTimeout `.
 
-* **clearInterval(id: number)** - тоже самое, что `clearInterval`.
+* **clearInterval(id: number)** - similar to ` clearInterval `.
 
-* **clearTrustyInterval(id: number)** - тоже самое, что `clearTimeout`, но для `setTrustyInterval`.
+* **clearTrustyInterval(id: number)** - similar to ` clearTimeout `, but for ` setTrustyInterval `.
 
-# Опции
+# Options
 
-* **recordDiff** - записывать ли разцицу во времени между стартом отсчета до выполнения и срабатыванием. Результат передается как 1-й аргумент коллбэка.
+* **recordDiff: boolean** - whether to record time difference between set timer and trigger callback. The result is passed as the 1st argument to the callback.
