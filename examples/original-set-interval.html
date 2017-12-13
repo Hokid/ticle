@@ -3,26 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Ticle</title>
-    <style>
-        pre {
-            max-height: 400px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <pre id="result"></pre>
+<script src="utils.js"></script>
 <script>
-    var resultEl = document.getElementById('result');
-
-    function writeLn(text) {
-        resultEl.innerHTML += text.concat('\n');
-    }
     var date2 = Date.now();
     setInterval(function () {
         var now = Date.now();
         var diff = now - date2;
         date2 = now;
-        writeLn('setInterval: 1000ms , diff: ' + diff);
+        write('setInterval: 1000ms , diff: ' + diff, 'result');
     }, 1000)
 </script>
 </body>

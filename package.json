@@ -1,10 +1,11 @@
 {
     "name": "ticle",
     "version": "1.0.1",
-    "description": "Extended js timers",
+    "description": "Timers utility based on web worker thred",
     "main": "build/ticle.js",
     "scripts": {
-        "build": "webpack -p"
+        "build": "webpack",
+        "build:min": "NODE_ENV=production webpack -p"
     },
     "repository": {
         "type": "git",
@@ -17,7 +18,9 @@
     "keywords": [
         "timers",
         "worker",
-        "time"
+        "time",
+        "utility",
+        "helper"
     ],
     "homepage": "https://github.com/Hokid/ticle",
     "bugs": {
@@ -26,12 +29,13 @@
     "author": "Kirill Horoshilov <mr.hokid@gmail.com> (https://github.com/Hokid)",
     "license": "MIT",
     "devDependencies": {
+        "@babel/cli": "^7.0.0-beta.34",
         "@babel/core": "^7.0.0-beta.34",
         "@babel/plugin-proposal-class-properties": "^7.0.0-beta.34",
         "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.34",
         "@babel/preset-env": "^7.0.0-beta.34",
         "babel-loader": "^8.0.0-beta.0",
-        "babel-plugin-external-helpers": "^6.22.0",
+        "closure-webpack-plugin": "0.0.16",
         "webpack": "^3.10.0",
         "worker-loader": "^1.1.0"
     },
