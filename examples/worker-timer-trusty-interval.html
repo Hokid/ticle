@@ -11,21 +11,17 @@
 </head>
 <body>
 <pre id="result"></pre>
+<script src="utils.js"></script>
 <script src="../build/ticle.js"></script>
 <script>
-    var resultEl = document.getElementById('result');
     var timer = new Ticle.WorkerTimer({
         recordDiff: true
     });
 
-    function writeLn(text) {
-        resultEl.innerHTML += text.concat('\n');
-    }
-
-    timer.setTrustyInterval(function (diff, arg1) {
-        writeLn('setTrustyInterval: 1000ms');
-        writeLn('  diff: ' + diff);
-        writeLn('  arg1: ' + arg1);
+    timer.setInterval(function (diff, arg1) {
+        write('setTrustyInterval: 1000ms', 'result');
+        write('  diff: ' + diff, 'result');
+        write('  arg1: ' + arg1, 'result');
 
     }, 1000, 'arg1');
 </script>

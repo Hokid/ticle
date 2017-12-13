@@ -12,7 +12,7 @@ function tick(id, ...args) {
 
 function initWorker() {
     if (Worker === undefined) {
-        Worker = new WorkerThread()
+        Worker = new WorkerThread();
         Worker.onerror = onError;
         Worker.onmessage = onMessage;
         Worker.postMessage(

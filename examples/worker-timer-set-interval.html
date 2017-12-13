@@ -3,27 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Ticle</title>
-    <style>
-        pre {
-            max-height: 400px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <pre id="result"></pre>
+<script src="utils.js"></script>
 <script src="../build/ticle.js"></script>
 <script>
-    var resultEl = document.getElementById('result');
     var timer = new Ticle.WorkerTimer({
         recordDiff: true
     });
 
-    function writeLn(text) {
-        resultEl.innerHTML += text.concat('\n');
-    }
-
     timer.setInterval(function (diff) {
-        writeLn('setInterval: 1000ms , diff: ' + diff);
+        write('setInterval: 1000ms , diff: ' + diff, 'result');
     }, 1000)
 </script>
 </body>

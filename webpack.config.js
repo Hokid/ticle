@@ -1,12 +1,14 @@
 const path = require('path');
-const root = __dirname;
+const ClosureCompilerPlugin = require('closure-webpack-plugin');
 
-module.exports = {
-    entry: path.resolve(root, './src/index.js'),
+const root = __dirname;
+const workerPaht = path.resolve(root, './src/lib/Timer.Worker.js');
+const entryPath = path.resolve(root, './src/index.js');
+const config = {
+    entry: entryPath,
     output: {
         path: path.resolve(root, './build'),
         filename: 'ticle.js',
-        chunkFilename: '[name].js',
         library: 'Ticle',
         libraryTarget: "umd"
     },
@@ -15,11 +17,11 @@ module.exports = {
             {
                 test: /\.js$/,
                 enforce: 'pre',
-                exclude: /node_modules/,
+                exclude: [/node_modules/],
                 loader: 'babel-loader',
             },
             {
-                test: /\.Worker\.js$/,
+                test: workerPaht,
                 exclude: /node_modules/,
                 loader: 'worker-loader',
                 options: {
@@ -28,5 +30,23 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: []
+};
+
+
+if (process.env.NODE_ENV === 'production') {
+    config.stats = 'detailed';
+    config.plugins.push(
+        new ClosureCompilerPlugin({
+            mode: 'STANDARD'
+        },{
+            language_in: 'ECMASCRIPT5',
+            language_out: 'ECMASCRIPT5',
+            compilation_level: 'SIMPLE',
+            warning_level: 'QUIET'
+        })
+    );
 }
+
+module.exports = config;
